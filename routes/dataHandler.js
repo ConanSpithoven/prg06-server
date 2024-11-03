@@ -1,3 +1,5 @@
+import createPagination from "./pageHandler.js";
+
 export function LinkAdder(results){
     for (var result of results){
       result['_links'] = {'self' : {'href' : '/bosses/' + result._id}};
@@ -5,12 +7,13 @@ export function LinkAdder(results){
     return results;
 }
   
-export function ListDataBuilder(results, count = 0, start = 0, limit = 0) {
+export function ListDataBuilder(results, total = 0, start = 0, limit = 0) {
     results = LinkAdder(results);
+    let pagination = createPagination(total, start, limit);
     let data = {
         'items' : results,
         '_links' : {'self' : {'href' : '/bosses'}},
-        'pagination' : {'temp' : 'balls', 'total' : count, 'start' : start, 'limit' : limit}
+        'pagination' : pagination
     };
     return data;
 }
