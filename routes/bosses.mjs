@@ -1,11 +1,13 @@
-import express from "express";
+import express, { json } from "express";
 
 const router = express.Router();
 import Boss from "../models/bossModel.js";
+import * as DataHandler from "./dataHandler.js";
 
 router.use("/*", function(req, res, next){
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.header('Allow', 'GET, POST, PUT, DELETE, OPTIONS');
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
     if('GET' === req.method){
       if (req.accepts('json')) {
@@ -34,37 +36,33 @@ router.use("/*", function(req, res, next){
 
 // Get a single boss
 router.get("/:id", async (req, res) => {
-  let result = await Boss.findById(req.params.id);
+  let result = await Boss.findById(req.params.id).lean();
 
   if (!result) res.send("Not found").status(404);
-  else res.send(result).status(200);
+  else res.send(DataHandler.IDDataBuilder(result)).status(200);
 });
 
 router.get("/", async (req, res) => {
   let results;
-  if(req.query.id !== undefined){
-    results = await Boss.findById(req.query.id);
-  } else {
-    results = await Boss.find({}, "_id name type", {skip: req.query.start}).limit(req.query.limit);
-  }
+  results = await Boss.find({}, "_id name type", {skip: req.query.start-1}).limit(req.query.limit).lean();
   if (!results) res.send("Not found").status(404);
-  else res.send(results).status(200);
+  else res.send(DataHandler.ListDataBuilder(results, results.length, req.query.start, req.query.limit)).status(200);
 });
 
 // Add a new boss to the collection
 router.post("/", async (req, res) => {
   let result = await Boss.create(req.body);
-  res.send(result).status(204);
+  res.send(DataHandler.IDDataBuilder(result)).status(204);
 });
 
-//add PUT function to update full record
+// add PUT function to update full record
 router.put("/:id", async (req, res) => {
   let target = await Boss.findById(req.params.id);
   if (!target) {
     res.send("Not found").status(404);
   } else {
     let result = await Boss.replaceOne({_id : req.params.id}, req.body);
-    res.send(result).status(200);
+    res.send(DataHandler.IDDataBuilder(result)).status(200);
   }
 });
 

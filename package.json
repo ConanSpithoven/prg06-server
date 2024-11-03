@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "format": "prettier --single-quote --check .",
     "prepare": "cd ../ && husky install server/.husky",
-    "dev": "nodemon --experimental-modules index.mjs"
+    "dev": "nodemon --experimental-modules index.mjs",
+    "init": "node seedBosses.js"
   },
   "dependencies": {
     "cors": "^2.8.5",

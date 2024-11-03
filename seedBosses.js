@@ -35,6 +35,14 @@ const seedBosses = [
         damageType: 'Pierce, Lightning',
         type: 'Divine',
         special: 'Gank fight with Smough',
+    },
+    {
+        name: 'Gwyn, Lord of Cinder',
+        weaknesses: 'Fire',
+        strengths: 'Lightning, Status',
+        damageType: 'Slash, Fire',
+        type: 'Divine',
+        special: 'Parryable',
     }
 ];
 
