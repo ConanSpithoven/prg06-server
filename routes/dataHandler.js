@@ -1,8 +1,9 @@
 import createPagination from "./pageHandler.js";
+import "../loadEnvironment.mjs";
 
 export function LinkAdder(results){
     for (var result of results){
-      result['_links'] = {'self' : {'href' : '/bosses/' + result._id}};
+      result['_links'] = {'self' : {'href' : process.env.HOST + '/bosses/' + result._id}};
     }
     return results;
 }
@@ -12,7 +13,7 @@ export function ListDataBuilder(results, total = 0, start = 0, limit = 0) {
     let pagination = createPagination(total, start, limit);
     let data = {
         'items' : results,
-        '_links' : {'self' : {'href' : '/bosses'}},
+        '_links' : {'self' : {'href' : process.env.HOST + '/bosses'}},
         'pagination' : pagination
     };
     return data;
@@ -21,7 +22,7 @@ export function ListDataBuilder(results, total = 0, start = 0, limit = 0) {
 export function IDDataBuilder(result) {
     let data = {
         'item' : result,
-        '_links' : {'self' : {'href' : '/bosses/' + result._id}, 'collection' : {'href' : '/bosses'}},
+        '_links' : {'self' : {'href' : process.env.HOST + '/bosses/' + result._id}, 'collection' : {'href' : process.env.HOST + '/bosses'}},
     };
     return data;
 }

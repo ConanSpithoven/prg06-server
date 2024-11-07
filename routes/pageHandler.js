@@ -1,7 +1,6 @@
+import "../loadEnvironment.mjs";
+
 function currentItems(total, start, limit){
-    console.log("total: " + total);
-    console.log("start: " + start);
-    console.log("limit: " + limit);
     if((start == 1 || start === undefined) && (limit == 0 || limit === undefined)){
         return total;
     } else if (limit == 0 || limit === undefined){
@@ -96,22 +95,21 @@ export default function createPagination(total, start, limit){
         'link' : {
             'first' : {
                 'page' : 1,
-                'href' : '/bosses/' + firstQuery
+                'href' : process.env.HOST + '/bosses/' + firstQuery
             },
             'last' : {
                 'page' : lastPage,
-                'href' : '/bosses/' + lastQuery
+                'href' : process.env.HOST + '/bosses/' + lastQuery
             },
             'previous' : {
                 'page' : previousPage,
-                'href' : '/bosses/' + previousQuery
+                'href' : process.env.HOST + '/bosses/' + previousQuery
             },
             'next' : {
                 'page' : nextPage,
-                'href' : '/bosses/' + nextQuery
+                'href' : process.env.HOST + '/bosses/' + nextQuery
             },
         }
     }
-console.log(data);
     return data;
 }
