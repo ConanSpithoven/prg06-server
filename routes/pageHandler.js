@@ -95,19 +95,19 @@ export default function createPagination(total, start, limit){
         'link' : {
             'first' : {
                 'page' : 1,
-                'href' : process.env.HOST + '/bosses/' + firstQuery
+                'href' : process.env.HOST + '/bosses' + firstQuery
             },
             'last' : {
                 'page' : lastPage,
-                'href' : process.env.HOST + '/bosses/' + lastQuery
+                'href' : process.env.HOST + '/bosses' + lastQuery
             },
             'previous' : {
                 'page' : previousPage,
-                'href' : process.env.HOST + '/bosses/' + previousQuery
+                'href' : process.env.HOST + '/bosses' + previousQuery
             },
             'next' : {
                 'page' : nextPage,
-                'href' : process.env.HOST + '/bosses/' + nextQuery
+                'href' : process.env.HOST + '/bosses' + nextQuery
             },
         }
     }
