@@ -8,7 +8,7 @@ export function LinkAdder(results){
     return results;
 }
   
-export function ListDataBuilder(results, total = 0, start = 0, limit = 0) {
+export function ListDataBuilder(results, total = 0, start = 1, limit = 0) {
     results = LinkAdder(results);
     let pagination = createPagination(total, start, limit);
     let data = {

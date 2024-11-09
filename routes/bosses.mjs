@@ -56,6 +56,7 @@ router.get("/", async (req, res) => {
 // Add a new boss to the collection
 router.post("/", async (req, res) => {
   let result = await Boss.create(req.body);
+  console.log(result);
   res.send(DataHandler.IDDataBuilder(result)).status(204);
 });
 

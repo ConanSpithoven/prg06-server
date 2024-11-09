@@ -32,11 +32,11 @@ function lastPageItem(total, start, limit){
 }
 
 function previousPageItem(total, start, limit){
-    return ((currentPage(total, start, limit) - 2) * limit + 1);
+    return (Math.max((currentPage(total, start, limit) - 2) * limit + 1), 1);
 }
 
 function nextPageItem(total, start, limit){
-    return ((currentPage(total, start, limit)) * limit + 1);
+    return (Math.min((currentPage(total, start, limit)) * limit + 1));
 }
 
 function getFirstQueryString(total, start, limit){
@@ -68,10 +68,16 @@ function getNextQueryString(total, start, limit){
 }
 
 function itemToPageNumber(total, start, limit, itemNumber){
-    if(limit != 0)
-        return Math.ceil(((itemNumber - 1) / limit) + 1);
-    else
-        return 0;
+    let page;
+    if(limit != 0){
+        page =  Math.ceil(((itemNumber - 1) / limit) + 1);
+        if(page == 0) {
+            return 1;
+        } else {
+            return page;
+        }
+    }else
+        return 1;
 }
 
 export default function createPagination(total, start, limit){
@@ -82,9 +88,9 @@ export default function createPagination(total, start, limit){
     let firstQuery = getFirstQueryString(total, start, limit);
     let lastQuery = getLastQueryString(total, start, limit);
     let lastPage = itemToPageNumber(total, start, limit, total);
-    let previousPage = CurrentPage - 1;
+    let previousPage = Math.max(CurrentPage - 1, 1);
     let previousQuery = getPreviousQueryString(total, start, limit);
-    let nextPage = CurrentPage + 1;
+    let nextPage = Math.max(CurrentPage + 1, lastPage);
     let nextQuery = getNextQueryString(total, start, limit);
 
     let data = {
