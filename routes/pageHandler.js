@@ -90,7 +90,7 @@ export default function createPagination(total, start, limit){
     let lastPage = itemToPageNumber(total, start, limit, total);
     let previousPage = Math.max(CurrentPage - 1, 1);
     let previousQuery = getPreviousQueryString(total, start, limit);
-    let nextPage = Math.max(CurrentPage + 1, lastPage);
+    let nextPage = Math.min(CurrentPage + 1, lastPage);
     let nextQuery = getNextQueryString(total, start, limit);
 
     let data = {

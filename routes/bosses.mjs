@@ -13,14 +13,14 @@ router.use("/*", function(req, res, next){
       if (req.accepts('json')) {
         res.setHeader('Content-Type', 'application/json');
       } else {
-        res.status(406).send('Content-type not supported, Only JSON allowed');
+        res.status(201).send('Content-type not supported, Only JSON allowed');
         return;
       }
     }else if('POST' === req.method || 'PUT' === req.method){
       if(req.is('*/json') || req.is('*/x-www-form-urlencoded')){
       res.setHeader('Content-Type', ['application/json', 'application/x-www-form-urlencoded']);
       } else {
-        res.status(406).send('Content-type not supported, Only JSON and urlencoded allowed');
+        res.status(201).send('Content-type not supported, Only JSON and urlencoded allowed');
         return;
       }
     }
