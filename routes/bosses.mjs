@@ -43,13 +43,13 @@ router.get("/:id", async (req, res) => {
 });
 
 router.get("/", async (req, res) => {
-  let results = await Boss.find({}, "_id name type", {skip: req.query.start-1}).limit(req.query.limit).lean();
+  let results = await Boss.find({}, "_id name type", {skip: req.query.page-1}).limit(req.query.limit).lean();
   if (!results) {
     res.send("Not found").status(404);
   }
   else {
     let total = await Boss.countDocuments({});
-    res.send(DataHandler.ListDataBuilder(results, total, req.query.start, req.query.limit)).status(200);
+    res.send(DataHandler.ListDataBuilder(results, total, req.query.page, req.query.limit)).status(200);
   }
 });
 
