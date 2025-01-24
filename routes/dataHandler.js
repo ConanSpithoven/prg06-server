@@ -26,3 +26,21 @@ export function IDDataBuilder(result) {
     };
     return data;
 }
+
+const fields = {
+    name: 'string',
+    weaknesses: 'string',
+    strengths: 'string',
+    damageType: 'string',
+    type: 'string',
+    special: 'string'
+};
+
+export function PostFieldChecker(body) {
+    for (let attribute in fields) {
+        if (typeof body[attribute] !== fields[attribute] || body[attribute] == "") {
+            return false;
+        }
+    }
+    return true;
+}

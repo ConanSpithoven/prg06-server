@@ -13,14 +13,14 @@ router.use("/*", function(req, res, next){
       if (req.accepts('json')) {
         res.setHeader('Content-Type', 'application/json');
       } else {
-        res.status(403).send('Content-type not supported, Only JSON allowed');
+        res.status(400).send('Content-type not supported, Only JSON allowed');
         return;
       }
     }else if('POST' === req.method || 'PUT' === req.method){
       if(req.is('*/json') || req.is('*/x-www-form-urlencoded')){
         res.setHeader('Content-Type', ['application/json', 'application/x-www-form-urlencoded']);
       } else {
-        res.status(403).send('Content-type not supported, Only JSON and urlencoded allowed');
+        res.status(400).send('Content-type not supported, Only JSON and urlencoded allowed');
         return;
       }
     }
@@ -55,6 +55,10 @@ router.get("/", async (req, res) => {
 
 // Add a new boss to the collection
 router.post("/", async (req, res) => {
+  if (!DataHandler.PostFieldChecker(req.body)) {
+      res.status(400).send('Request body is invalid, fields missing or empty');
+      return;
+  }
   let result = await Boss.create(req.body);
   res.status(201).send(DataHandler.IDDataBuilder(result));
 });
@@ -65,6 +69,10 @@ router.put("/:id", async (req, res) => {
   if (!target) {
     res.status(404).send("Not found");
   } else {
+    if (!DataHandler.PostFieldChecker(req.body)) {
+      res.status(400).send('Request body is invalid, fields missing or empty');
+      return;
+    }
     let result = await Boss.replaceOne({_id : req.params.id}, req.body);
     res.send(DataHandler.IDDataBuilder(result)).status(200);
   }
