@@ -55,11 +55,15 @@ router.get("/", async (req, res) => {
 
 // Add a new boss to the collection
 router.post("/", async (req, res) => {
-  if (!DataHandler.PostFieldChecker(req.body)) {
+  let checkBody = body
+    if (body.hasOwnProperty('item')) {
+        checkBody = body.item;
+    }
+  if (!DataHandler.PostFieldChecker(checkBody)) {
       res.status(400).send('Request body is invalid, fields missing or empty');
       return;
   }
-  let result = await Boss.create(req.body);
+  let result = await Boss.create(checkBody);
   res.status(201).send(DataHandler.IDDataBuilder(result));
 });
 

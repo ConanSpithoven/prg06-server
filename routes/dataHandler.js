@@ -37,10 +37,6 @@ const fields = {
 };
 
 export function PostFieldChecker(body) {
-    let checkBody = body
-    if (body.hasOwnProperty('item')) {
-        checkBody = body.item;
-    }
     for (let attribute in fields) {
         if (typeof checkBody[attribute] !== fields[attribute] || checkBody[attribute] == "") {
             return false;
