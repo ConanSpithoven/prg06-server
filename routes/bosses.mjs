@@ -69,11 +69,11 @@ router.put("/:id", async (req, res) => {
   if (!target) {
     res.status(404).send("Not found");
   } else {
-    if (!DataHandler.PutFieldChecker(req.body)) {
+    if (!DataHandler.PostFieldChecker(req.body)) {
       res.status(400).send('Request body is invalid, fields empty');
       return;
     }
-    let result = await Boss.replaceOne({_id : req.params.id}, req.body);
+    let result = await Boss.findOneAndUpdate({_id : req.params.id}, req.body);
     result['_id'] = req.params.id;
     res.send(DataHandler.IDDataBuilder(result)).status(200);
   }

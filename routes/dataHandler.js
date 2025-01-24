@@ -44,12 +44,3 @@ export function PostFieldChecker(body) {
     }
     return true;
 }
-
-export function PutFieldChecker(body) {
-    for (let attribute in fields) {
-        if (body[attribute] == "") {
-            return false;
-        }
-    }
-    return true;
-}
