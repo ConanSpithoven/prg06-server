@@ -55,7 +55,7 @@ router.get("/", async (req, res) => {
 
 // Add a new boss to the collection
 router.post("/", async (req, res) => {
-  let checkBody = req.bodybody
+  let checkBody = req.body;
     if (req.body.hasOwnProperty('item')) {
         checkBody = req.body.item;
     }
