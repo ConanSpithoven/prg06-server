@@ -69,8 +69,8 @@ router.put("/:id", async (req, res) => {
   if (!target) {
     res.status(404).send("Not found");
   } else {
-    if (!DataHandler.PostFieldChecker(req.body)) {
-      res.status(400).send('Request body is invalid, fields missing or empty');
+    if (!DataHandler.PutFieldChecker(req.body)) {
+      res.status(400).send('Request body is invalid, fields empty');
       return;
     }
     let result = await Boss.replaceOne({_id : req.params.id}, req.body);
