@@ -74,6 +74,7 @@ router.put("/:id", async (req, res) => {
       return;
     }
     let result = await Boss.replaceOne({_id : req.params.id}, req.body);
+    result['_id'] = req.params.id;
     res.send(DataHandler.IDDataBuilder(result)).status(200);
   }
 });
