@@ -13,14 +13,14 @@ router.use("/*", function(req, res, next){
       if (req.accepts('json')) {
         res.setHeader('Content-Type', 'application/json');
       } else {
-        res.status(201).send('Content-type not supported, Only JSON allowed');
+        res.status(403).send('Content-type not supported, Only JSON allowed');
         return;
       }
     }else if('POST' === req.method || 'PUT' === req.method){
       if(req.is('*/json') || req.is('*/x-www-form-urlencoded')){
-      res.setHeader('Content-Type', ['application/json', 'application/x-www-form-urlencoded']);
+        res.setHeader('Content-Type', ['application/json', 'application/x-www-form-urlencoded']);
       } else {
-        res.status(201).send('Content-type not supported, Only JSON and urlencoded allowed');
+        res.status(403).send('Content-type not supported, Only JSON and urlencoded allowed');
         return;
       }
     }
@@ -38,14 +38,14 @@ router.use("/*", function(req, res, next){
 router.get("/:id", async (req, res) => {
   let result = await Boss.findById(req.params.id).lean();
 
-  if (!result) res.send("Not found").status(404);
+  if (!result) res.status(404).send("Not found");
   else res.send(DataHandler.IDDataBuilder(result)).status(200);
 });
 
 router.get("/", async (req, res) => {
   let results = await Boss.find({}, "_id name type", {skip: req.query.start-1}).limit(req.query.limit).lean();
   if (!results) {
-    res.send("Not found").status(404);
+    res.status(404).send("Not found");
   }
   else {
     let total = await Boss.countDocuments({});
@@ -56,15 +56,14 @@ router.get("/", async (req, res) => {
 // Add a new boss to the collection
 router.post("/", async (req, res) => {
   let result = await Boss.create(req.body);
-  console.log(result);
-  res.send(DataHandler.IDDataBuilder(result)).status(204);
+  res.status(201).send(DataHandler.IDDataBuilder(result));
 });
 
 // add PUT function to update full record
 router.put("/:id", async (req, res) => {
   let target = await Boss.findById(req.params.id);
   if (!target) {
-    res.send("Not found").status(404);
+    res.status(404).send("Not found");
   } else {
     let result = await Boss.replaceOne({_id : req.params.id}, req.body);
     res.send(DataHandler.IDDataBuilder(result)).status(200);
@@ -75,7 +74,7 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   let target = await Boss.findById(req.params.id);
   if (!target) {
-    res.send("Not found").status(404);
+    res.status(404).send("Not found");
   } else {
     let result = await target.deleteOne();
     res.send(result).status(200);
