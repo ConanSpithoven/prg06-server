@@ -86,7 +86,7 @@ router.delete("/:id", async (req, res) => {
     res.status(404).send("Not found");
   } else {
     let result = await target.deleteOne();
-    res.send(result).status(200);
+    res.status(204).send(result);
   }
 });
 
