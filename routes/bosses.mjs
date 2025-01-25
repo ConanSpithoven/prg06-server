@@ -81,7 +81,7 @@ router.put("/:id", async (req, res) => {
       res.status(400).send('Request body is invalid, fields empty');
       return;
     }
-    let result = await Boss.findOneAndUpdate({_id : req.params.id}, req.body.item);
+    let result = await Boss.findOneAndUpdate({_id : req.params.id}, checkBody);
     result['_id'] = req.params.id;
     res.send(DataHandler.IDDataBuilder(result)).status(200);
   }
