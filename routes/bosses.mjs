@@ -6,7 +6,7 @@ import * as DataHandler from "./dataHandler.js";
 
 router.use("/*", function(req, res, next){
     res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Origin, X-Requested-With');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Origin, X-Requested-With, Accept');
     if('GET' === req.method){
       if (req.accepts('json')) {
         res.setHeader('Content-Type', 'application/json');
@@ -92,10 +92,12 @@ router.delete("/:id", async (req, res) => {
 
 router.options("/", async (req, res) => {
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.header('Allow', 'GET,POST,OPTIONS');
 });
 
 router.options("/:id", async (req, res) => {
   res.header('Access-Control-Allow-Methods', 'GET, PUT, DELETE, OPTIONS');
+  res.header('Allow', 'GET,PUT,DELETE,OPTIONS');
 });
 
 export default router;
