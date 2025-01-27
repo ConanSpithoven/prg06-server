@@ -8,14 +8,6 @@ mongoose.connect(process.env.ATLAS_URI);
 
 const PORT = process.env.PORT || 3000;
 const app = express();
-app.options("/*", function(req, res){
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
-  res.header('Allow', 'GET,POST,PUT,DELETE,OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
-  res.setHeader('Content-Type', ['application/json', 'application/x-www-form-urlencoded']);
-  res.sendStatus(204);
-});
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))

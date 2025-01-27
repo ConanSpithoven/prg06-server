@@ -6,19 +6,15 @@ import * as DataHandler from "./dataHandler.js";
 
 router.use("/*", function(req, res, next){
     res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-    res.header('Allow', 'GET, POST, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, X-Requested-With');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Origin, X-Requested-With');
     if('GET' === req.method){
-      res.header('Access-Control-Allow-Methods', 'GET, PUT, DELETE, OPTIONS');
-      res.header('Allow', 'GET, PUT, DELETE, OPTIONS');
       if (req.accepts('json')) {
         res.setHeader('Content-Type', 'application/json');
       } else {
         res.status(400).send('Content-type not supported, Only JSON allowed');
         return;
       }
-    }else if('POST' === req.method || 'PUT' === req.method){
+    } else if('POST' === req.method || 'PUT' === req.method){
       if(req.is('*/json') || req.is('*/x-www-form-urlencoded')){
         res.setHeader('Content-Type', ['application/json', 'application/x-www-form-urlencoded']);
       } else {
@@ -27,13 +23,7 @@ router.use("/*", function(req, res, next){
       }
     }
 
-    //intercepts OPTIONS method
-    if ('OPTIONS' === req.method) {
-      res.send(204);
-    } else {
-    //move on
-      next();
-    }
+    next();
 });
 
 // Get a single boss
@@ -98,6 +88,14 @@ router.delete("/:id", async (req, res) => {
     let result = await target.deleteOne();
     res.status(204).send(result);
   }
+});
+
+router.options("/", async (req, res) => {
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+});
+
+router.options("/:id", async (req, res) => {
+  res.header('Access-Control-Allow-Methods', 'GET, PUT, DELETE, OPTIONS');
 });
 
 export default router;
