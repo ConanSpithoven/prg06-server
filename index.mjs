@@ -8,12 +8,14 @@ mongoose.connect(process.env.ATLAS_URI);
 
 const PORT = process.env.PORT || 3000;
 const app = express();
-app.use(cors());
+
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 
 // Load the /bosses routes
 app.use("/bosses", Routeboss);
+
+app.use(cors());
 
 // Global error handling
 app.use((err, _req, res, next) => {
