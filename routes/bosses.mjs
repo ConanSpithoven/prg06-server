@@ -93,14 +93,12 @@ router.delete("/:id", async (req, res) => {
 router.options("/", async (req, res) => {
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.header('Allow', 'GET,POST,OPTIONS');
-  res.header('Content-Type', 'application/json');
   res.send(200);
 });
 
 router.options("/:id", async (req, res) => {
   res.header('Access-Control-Allow-Methods', 'GET, PUT, DELETE, OPTIONS');
   res.header('Allow', 'GET,PUT,DELETE,OPTIONS');
-  res.header('Content-Type', ['application/json', 'application/x-www-form-urlencoded']);
   res.send(200);
 });
 
